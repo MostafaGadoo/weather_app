@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/network/local/cache_helper.dart';
 import 'package:weather_app/core/network/remote/dio_helper.dart';
 import 'package:weather_app/core/utils/blocs/app/cubit.dart';
 import 'package:weather_app/features/home/presentation/pages/home_page.dart';
+import 'package:weather_app/features/home/presentation/pages/new_design/select_country_home.dart';
 import 'package:weather_app/features/home/presentation/pages/new_design/weather_home_page.dart';
 import 'package:weather_app/features/home/presentation/pages/new_design/on_boarding.dart';
 import 'package:weather_app/features/home/presentation/widgets/home_widget_scroll.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
-  runApp(const MyApp());
+  await CacheHelper.init();
+
+  bool onBoarding = CacheHelper.getData(key: 'onBoarding');
+  runApp(MyApp(onBoarding: onBoarding,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool onBoarding;
+  const MyApp({Key? key, required this.onBoarding}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -33,7 +40,7 @@ class MyApp extends StatelessWidget {
           ),
           primarySwatch: Colors.blue,
         ),
-        home: const OnBoardingHomeScreen(),
+        home: onBoarding ? const SelectCountryHome() : const OnBoardingHomeScreen(),
       ),
     );
   }

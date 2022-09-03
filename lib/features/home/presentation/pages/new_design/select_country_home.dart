@@ -13,28 +13,8 @@ class SelectCountryHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppBloc, AppStates>(
       listener: (context, state) {
-        // TODO: implement listener
+
       },
-      //Container(
-      //                   width: 70,
-      //                   height: 70,
-      //                   decoration: BoxDecoration(
-      //                     borderRadius: BorderRadius.circular(50,),
-      //                     color: Colors.lightBlueAccent,
-      //                   ),
-      //                   child: IconButton(
-      //                       onPressed: () {
-      //                         cubit.getWeather(cubit.firstCountryController.text);
-      //                         cubit.secondGetWeather(
-      //                             cubit.secondCountryController.text);
-      //                         Navigator.push(context, MaterialPageRoute(builder: (
-      //                             context) => const WeatherHomePage(),),);
-      //                       },
-      //                       icon: const Icon(
-      //                         Icons.arrow_forward_ios,
-      //                         color: Colors.white,
-      //                       )),
-      //                 ),
       builder: (context, state) {
         AppBloc cubit = AppBloc.get(context);
         return SafeArea(

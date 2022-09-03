@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
+import 'package:weather_app/core/network/local/cache_helper.dart';
 import 'package:weather_app/features/home/presentation/pages/new_design/select_country_home.dart';
 import 'package:weather_app/features/home/presentation/pages/new_design/weather_home_page.dart';
 import 'package:weather_app/features/home/presentation/widgets/new_design_widgets/select_country_widget.dart';
@@ -83,7 +84,10 @@ class OnBoardingWidget extends StatelessWidget {
                     child: MaterialButton(
                       onPressed: (){
                         //WeatherHomePage
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SelectCountryHome(),),);
+                        CacheHelper.saveData(key: 'onBoarding', value: true,)
+                            .then((value) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SelectCountryHome(),),);
+                        });
                         // Navigator.pop(context, MaterialPageRoute(builder: (context)=>const SelectCountryHome(),),);
                       },
                       height: 54,
