@@ -1,22 +1,30 @@
 import 'package:dio/dio.dart';
+import 'package:weather_app/core/network/remote/end_points.dart';
 
 class DioHelper{
+  static final DioHelper _instance = DioHelper._internal();
+
+  factory DioHelper() {
+    return _instance;
+  }
+
+  DioHelper._internal() {
+    dio = Dio(
+      BaseOptions(
+        baseUrl: '$baseApiUrl$version',
+        receiveDataWhenStatusError: true,
+      ),
+    );
+  }
   static Dio? dio;
 
-  static init(){
-     dio = Dio(
-       BaseOptions(
-         baseUrl: 'https://api.openweathermap.org/',
-         receiveDataWhenStatusError: true,
-       ),
-     );
-  }
+
 
   static Future getData({
      required String url,
      required Map<String, dynamic>? query,
   }) async {
-      return await dio?.get(
+      return await dio!.get(
         url,
         queryParameters: query,
       );

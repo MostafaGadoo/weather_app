@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/core/utils/blocs/app/cubit.dart';
 import 'package:weather_app/core/utils/blocs/app/states.dart';
 import 'package:weather_app/features/home/presentation/widgets/new_design_widgets/search_widget.dart';
@@ -16,6 +18,7 @@ class SearchHome extends StatelessWidget {
       builder: (context, state) {
         AppBloc cubit = AppBloc.get(context);
         return Scaffold(
+          backgroundColor: HexColor('#2051d1'),
           appBar: AppBar(
             backgroundColor: Colors.transparent,
           ),
@@ -23,22 +26,8 @@ class SearchHome extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: [
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0,),
-                      ),
-                      labelText: 'Search for the city',
-                    ),
-                    controller: cubit.searchController,
-                    onFieldSubmitted: (value){
-                      cubit.getSearchResult(value);
-                      debugPrint(value.toString());
-                    },
-                  ),
-                  const SearchWidget(),
+                children: const [
+                  SearchWidget(),
                 ],
               ),
             ),

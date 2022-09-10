@@ -1,27 +1,37 @@
 import 'package:charcode/html_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:weather_app/core/utils/blocs/app/cubit.dart';
+import 'package:weather_app/core/utils/blocs/app/states.dart';
+import 'package:weather_app/features/home/presentation/pages/manage_locations_home.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: HexColor('#2d3741'),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              buildHeader(context),
-              buildMenuItem(context),
-            ],
+    return BlocConsumer<AppBloc, AppStates>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return Drawer(
+          backgroundColor: HexColor('#2d3741'),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  buildHeader(context),
+                  buildMenuItem(context),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -95,7 +105,7 @@ class NavigationDrawer extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                '${AppBloc.get(context).name}',
+                AppBloc.get(context).currentWeatherModel!.location.name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -122,7 +132,13 @@ class NavigationDrawer extends StatelessWidget {
                         right: 9,
                       ),
                       child: Text(
-                        '${AppBloc.get(context).tempMainWeather}'.split('.').first,
+                        AppBloc.get(context)
+                            .currentWeatherModel!
+                            .current
+                            .tempC
+                            .toString()
+                            .split('.')
+                            .first,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -179,12 +195,12 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           Row(
-            children:  [
+            children: [
               const SizedBox(
                 width: 48.0,
               ),
               Text(
-                '${AppBloc.get(context).secondName}',
+                AppBloc.get(context).favoriteModel!.location.name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -210,7 +226,13 @@ class NavigationDrawer extends StatelessWidget {
                         right: 9,
                       ),
                       child: Text(
-                        '${AppBloc.get(context).tempSecondMainWeather}'.split('.').first,
+                        AppBloc.get(context)
+                            .favoriteModel!
+                            .current
+                            .tempC
+                            .toString()
+                            .split('.')
+                            .first,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -244,7 +266,14 @@ class NavigationDrawer extends StatelessWidget {
             child: MaterialButton(
               height: 42,
               // clipBehavior: Clip.antiAliasWithSaveLayer,
-              onPressed: (){},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ManageLocationsHome(),
+                  ),
+                );
+              },
               child: const Text(
                 'Manage Locations',
                 style: TextStyle(

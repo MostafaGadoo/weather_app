@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:weather_app/core/utils/blocs/app/cubit.dart';
 import 'package:weather_app/core/utils/blocs/app/states.dart';
+import 'package:weather_app/features/home/presentation/pages/home_page.dart';
 import 'package:weather_app/features/home/presentation/pages/new_design/weather_home_page.dart';
+import 'package:weather_app/features/home/presentation/widgets/home_widget_scroll.dart';
 import 'package:weather_app/features/home/presentation/widgets/new_design_widgets/select_country_widget.dart';
 
 class SelectCountryHome extends StatelessWidget {
@@ -24,9 +26,10 @@ class SelectCountryHome extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: (){
-                    cubit.getWeather(cubit.firstCountryController.text);
-                    cubit.secondGetWeather(cubit.secondCountryController.text);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WeatherHomePage(),),);
+                    // cubit.getWeather(cubit.homeCountryController.text);
+                    // cubit.secondGetWeather(cubit.secondCountryController.text);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeWidgetScroll(),),);
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeWidgetScroll(),),);
                   },
                   child: const Text(
                   'Next',

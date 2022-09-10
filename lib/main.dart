@@ -11,16 +11,16 @@ import 'package:weather_app/features/home/presentation/widgets/home_widget_scrol
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DioHelper.init();
+  DioHelper();
   await CacheHelper.init();
 
-  bool onBoarding = CacheHelper.getData(key: 'onBoarding');
-  runApp(MyApp(onBoarding: onBoarding,));
+  // late bool onBoarding = CacheHelper.getData(key: 'onBoarding');
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool onBoarding;
-  const MyApp({Key? key, required this.onBoarding}) : super(key: key);
+  // final bool onBoarding;
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -33,14 +33,16 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
             iconTheme: IconThemeData(
-              color: Colors.black,
+              color: Colors.white,
             ),
             elevation: 0.0,
           ),
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepOrange,
         ),
-        home: onBoarding ? const SelectCountryHome() : const OnBoardingHomeScreen(),
+        home:  const OnBoardingHomeScreen(),
+          //onBoarding ? const SelectCountryHome() : const OnBoardingHomeScreen(),
       ),
     );
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:weather_app/core/utils/blocs/app/cubit.dart';
 import 'package:weather_app/core/utils/blocs/app/states.dart';
-import 'package:weather_app/features/home/presentation/pages/new_design/weather_home_page.dart';
 
-class SelectCountryWidget extends StatelessWidget {
-  const SelectCountryWidget({Key? key}) : super(key: key);
+class ManageLocationWidget extends StatelessWidget {
+  const ManageLocationWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +16,28 @@ class SelectCountryWidget extends StatelessWidget {
         AppBloc cubit = AppBloc.get(context);
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Lottie.asset('assets/maps-location.json'),
-                  ],
+                const Image(
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.fill,
+                  image: AssetImage('assets/Location.jpg'),
+                ),
+                const SizedBox(
+                  height: 20.0,
                 ),
                 const Text(
-                  'Select for your Home City',
-                  textAlign: TextAlign.center,
+                  'Change your home city:',
                   style: TextStyle(
-                    fontSize: 18,
+                    color: Colors.black,
+                    fontSize: 20,
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 15.0,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.text,
@@ -47,27 +45,26 @@ class SelectCountryWidget extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0,),
                     ),
-                    labelText: 'Search Your home city',
+                    labelText: 'Change your home city',
                   ),
                   controller: cubit.homeCountryController,
                   onFieldSubmitted: (value) {
                     cubit.getCurrentWeather(cubit.homeCountryController.text);
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const WeatherHomePage(),),);
                     debugPrint(value.toString());
                   },
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 15.0,
                 ),
                 const Text(
-                  'Select for your favorite City',
-                  textAlign: TextAlign.center,
+                  'Change your favorite city:',
                   style: TextStyle(
-                    fontSize: 18,
+                    color: Colors.black,
+                    fontSize: 20,
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 15.0,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.text,
@@ -75,16 +72,31 @@ class SelectCountryWidget extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0,),
                     ),
-                    labelText: 'Search Your favorite city',
+                    labelText: 'Change your favorite city',
                   ),
                   controller: cubit.favoriteCountryController,
                   onFieldSubmitted: (value) {
                     cubit.getFavoriteCityWeather(cubit.favoriteCountryController.text);
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const WeatherHomePage(),),);
                     debugPrint(value.toString());
                   },
                 ),
-
+                const SizedBox(
+                  height: 200,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FloatingActionButton(
+                      onPressed: (){
+                        cubit.getCurrentWeather(cubit.homeCountryController.text);
+                        cubit.getFavoriteCityWeather(cubit.favoriteCountryController.text);
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                      Icons.arrow_forward,
+                    ),),
+                  ],
+                )
               ],
             ),
           ),
